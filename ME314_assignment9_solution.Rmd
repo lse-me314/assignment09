@@ -441,7 +441,37 @@ This exercise is designed to get you working with [quanteda](https://quanteda.io
         plot(docvars(data_corpus_inaugural)$Year, as.numeric(posDfm[,1]))
         plot(docvars(data_corpus_inaugural)$Year, as.numeric(posDfm[,2]))
         ```
+        
+The previous analysis uses the count of articles and conjunctions, which depends on the length of the speech as longer speeches will, on average, use more articles and conjunctions. To remove this dependency, we can weight the document-feature matrix by document length and re-compute. For this, we first have to compute the full dfm, then weight it by document frequency, and finally apply the dictionary.
 
+```{r}
+inaugural_dfm <- dfm(data_corpus_inaugural)
+inaugural_wgt <- dfm_weight(inaugural_dfm, scheme = "prop")
+pos_wgt <- dfm_lookup(inaugural_wgt, dictionary = posDict)
+
+pos_wgt[1:10, ]
+
+# At this point, the document-feature matrix is a dense matrix
+sparsity(pos_wgt)  # == 0
+
+# For easier processing, you can turn it into a data.frame and add the Year
+pos_wgt_df <- convert(pos_wgt, to = "data.frame")
+pos_wgt_df <- cbind(pos_wgt_df, year = docvars(data_corpus_inaugural, "Year"))
+
+# NB: Only do this step if the dfm is dense already. Otherwise, the sparse 
+# (i.e. memory-efficient) matrix will be converted to a dense matrix which
+# will overload your memory.
+
+plot(pos_wgt_df$year, pos_wgt_df$articles, type = "l", col = "orange", ylim = range(pos_wgt))
+lines(pos_wgt_df$year, pos_wgt_df$conjunctions, type = "l", col = "blue")
+
+# Or use tidyr and ggplot2 (you need to have both packages installed for those lines to work)
+library("ggplot2")
+ggplot(
+  tidyr::gather(pos_wgt_df, key = "pos", value = "prop", -document, -year),
+  aes(x = year, y = prop, colour = pos)
+) + geom_line()
+```
 
 1.  Settle a Scrabble word value dispute.
 
