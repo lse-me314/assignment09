@@ -19,17 +19,16 @@ This exercise is designed to get you working with [quanteda](https://quanteda.io
     
     You will also need to install the package `quanteda.corpora` from github using the `install_github` function from the `devtools` package: 
     ```{r, eval=FALSE}
-    devtools::install_github('kbenoit/quanteda.corpora')
+    devtools::install_github("kbenoit/quanteda.corpora")
     ```
     
     
 1.  Exploring **quanteda** functions.
     
     ```{r, echo = T, message=FALSE}
-    library(tm)
-    library(quanteda)
-    library(quanteda.corpora)
-    library(readtext)
+    library("tm")
+    library("quanteda")
+    library("readtext")
 
     ```
 
@@ -39,7 +38,7 @@ This exercise is designed to get you working with [quanteda](https://quanteda.io
     you should also browse the documentation, especially `?corpus` to see the structure
     and operations of how to construct a corpus.  The website http://quanteda.io has extensive     documentation.
 
-    ```{r, eval = F}
+    ```{r, eval = FALSE}
     ?corpus
     example(dfm)
     example(corpus)
@@ -69,12 +68,12 @@ This exercise is designed to get you working with [quanteda](https://quanteda.io
         How did it work?  Try using `docvars()` to assign a set of document-level variables.
         If you do not have a set of text files to work with, then you can use the UK 2010 manifesto texts on immigration like this:
       
-        ```{r, echo=FALSE}
+        ```{r, echo = FALSE}
         library("quanteda", quietly = TRUE, warn.conflicts = FALSE)
         ```
 
-        ```{r, eval=FALSE}
-        require(quanteda)
+        ```{r, eval = FALSE}
+        library("quanteda")
         manfiles <- readtext("https://github.com/lse-me314/assignment09/blob/master/UKimmigTexts.zip?raw=true")
         mycorpus <- corpus(manfiles)
         ```
@@ -128,7 +127,7 @@ This exercise is designed to get you working with [quanteda](https://quanteda.io
     to subset the corpus first:
    
     ```{r}
-    obamadfm <- dfm(corpus_subset(data_corpus_inaugural, President=="Obama"))
+    obamadfm <- dfm(corpus_subset(data_corpus_inaugural, President == "Obama"))
     textplot_wordcloud(obamadfm)
     ```
 
@@ -168,7 +167,7 @@ This exercise is designed to get you working with [quanteda](https://quanteda.io
         **quanteda**'s `dfm()` function makes it wasy to pass the cleaning arguments to clean, which are executed as part of the tokenization implemented by `dfm()`.  Compare the steps required in a similar text preparation package, [**tm**](http://cran.r-project.org/package=tm):
         
         ```{r}
-        require(tm)
+        library("tm")
         data("crude")
         crude <- tm_map(crude, content_transformer(tolower))
         crude <- tm_map(crude, removePunctuation)
@@ -177,9 +176,9 @@ This exercise is designed to get you working with [quanteda](https://quanteda.io
         tdm <- TermDocumentMatrix(crude)
 
         # same in quanteda
-        require(quanteda)
+        library("quanteda")
         crudeCorpus <- corpus(crude)
-        crudeDfm <- dfm(crudeCorpus, remove_punct = T, remove_numbers = T, stem = T)
+        crudeDfm <- dfm(crudeCorpus, remove_punct = TRUE, remove_numbers = TRUE, stem = TRUE)
         ```
         
         Inspect the dimensions of the resulting objects, including the names of the words extracted as features.  It is also worth comparing the structure of the document-feature matrixes returned by each package.  **tm** uses the [slam](http://cran.r-project.org/web/packages/slam/index.html) *simple triplet matrix* format for representing a [sparse matrix](http://en.wikipedia.org/wiki/Sparse_matrix).
@@ -270,7 +269,7 @@ This exercise is designed to get you working with [quanteda](https://quanteda.io
         for instance:
         ```{r}
         posDfm <- dfm(data_corpus_inaugural, dictionary = posDict)
-        posDfm[1:10,]
+        posDfm[1:10, ]
         ```
         
         Plot the values of articles and conjunctions (actually, here just the coordinating conjunctions) across the speeches. (**Hint:** you can use `docvars(data_corpus_inaugural, "Year"))` for the *x*-axis.)
