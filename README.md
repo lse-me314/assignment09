@@ -4,13 +4,13 @@ You should clone this repository to get started with this lab.  The URL to clone
 
 ### Assignment
 
-* [Rmarkdown](ME314-assignment9-LASTNAME-FIRSTNAME.Rmd).
+* [Rmarkdown](ME314-assignment9-LASTNAME-FIRSTNAME.Rmd)
 * [html](ME314-assignment9-LASTNAME-FIRSTNAME.html)
 
-<!--
+
 ### Solutions
  
 Solution to Assignment 9 as:
-*  [html](ME314_assignment9_solution.html) 
-*  [RMarkdown](ME314_assignment9_solution.Rmd)  
---> 
+
+* [html](ME314_assignment9_solution.html) 
+* [RMarkdown](ME314_assignment9_solution.Rmd)  
