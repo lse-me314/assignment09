@@ -24,7 +24,7 @@ library(quanteda.textstats)
 library(readtext)
 ```
 
-2. You will also need to install the package `quanteda.corpora` from github using the `install_github` function from the `devtools` package: 
+2. You will also need to install the package `quanteda.corpora` from github using the `install_github` function from the `remotes` package: 
 
 ```{r, eval=FALSE}
 remotes::install_github("quanteda/quanteda.corpora")
